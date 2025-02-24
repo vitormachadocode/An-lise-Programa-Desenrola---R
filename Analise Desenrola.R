@@ -6,7 +6,7 @@ library(lmtest)
 library(sandwich)
 library(webshot2)
 
-setwd("C:/Users/Andre/Desktop/VÌtor - Estudos/Monografia")
+setwd("DIRET√ìRIO")
 
 basecnpj <- read_xlsx("Dados/basecnpj.xlsx")
 basecpf <- read_xlsx("Dados/basecpf.xlsx")
@@ -21,18 +21,18 @@ basecnpj <- basecnpj %>% mutate(vol=vol/1000) %>% mutate(post = ifelse(Data >= a
 basecpf <- basecpf %>% mutate(vol=vol/1000) %>% mutate(post = ifelse(Data >= as.Date("2023-07-01"),1, 0))
 
 basedid <- bind_rows(basecnpj, basecpf)
-#------EstatÌsticas Descritivas-------------------------------------------------
+#------Estat√≠sticas Descritivas-------------------------------------------------
 
 summary(basecnpj)
 summary(basecpf)
 
-#MÈdia
+#M√©dia
 mean(basecpf$vol)
 mean(basecnpj$vol)
 
 media_comp_antes <- data.frame(
     
-    variavel = c("Volume de CrÈdito", "InadimplÍncia", "Taxa de Juros"),
+    variavel = c("Volume de Cr√©dito", "Inadimpl√™ncia", "Taxa de Juros"),
     media_cpf = c(
       mean(basecpf$vol[basecpf$post == 0]),
       mean(basecpf$inadim[basecpf$post == 0]),
@@ -46,12 +46,12 @@ media_comp_antes <- data.frame(
   )
 medias_tabela_antes <- gt(media_comp_antes) %>%
     tab_header(
-      title = "ComparaÁ„o Entre as MÈdias (PrÈ Tratamento)"
+      title = "Compara√ß√£o Entre as M√©dias (Pr√© Tratamento)"
     ) %>%
   cols_label(
-    variavel = "V·riavel",
-    media_cpf = "MÈdias (CPF)",
-    media_cnpj = "MÈdias (CNPJ)"
+    variavel = "V√°riavel",
+    media_cpf = "M√©dias (CPF)",
+    media_cnpj = "M√©dias (CNPJ)"
   ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
@@ -62,12 +62,12 @@ medias_tabela_antes <- gt(media_comp_antes) %>%
     decimals = 2
   )
 
-gtsave(medias_tabela_antes, filename = "ComparaÁ„o MÈdias (PrÈ Tratamento).png")
+gtsave(medias_tabela_antes, filename = "Compara√ß√£o M√©dias (Pr√© Tratamento).png")
 
-#Depois mÈdia
+#Depois m√©dia
 media_comp_depois <- data.frame(
   
-  variavel = c("Volume de CrÈdito", "InadimplÍncia", "Taxa de Juros"),
+  variavel = c("Volume de Cr√©dito", "Inadimpl√™ncia", "Taxa de Juros"),
   media_cpf = c(
     mean(basecpf$vol[basecpf$post == 1]),
     mean(basecpf$inadim[basecpf$post == 1]),
@@ -81,12 +81,12 @@ media_comp_depois <- data.frame(
 )
 medias_tabela_depois <- gt(media_comp_depois) %>%
   tab_header(
-    title = "ComparaÁ„o Entre as MÈdias (PÛs Tratamento)"
+    title = "Compara√ß√£o Entre as M√©dias (P√≥s Tratamento)"
   ) %>%
   cols_label(
-    variavel = "V·riavel",
-    media_cpf = "MÈdias (CPF)",
-    media_cnpj = "MÈdias (CNPJ)"
+    variavel = "V√°riavel",
+    media_cpf = "M√©dias (CPF)",
+    media_cnpj = "M√©dias (CNPJ)"
   ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
@@ -97,12 +97,12 @@ medias_tabela_depois <- gt(media_comp_depois) %>%
     decimals = 2
   )
 
-gtsave(medias_tabela_depois, filename = "ComparaÁ„o MÈdias (PÛs Tratamento).png")
+gtsave(medias_tabela_depois, filename = "Compara√ß√£o M√©dias (P√≥s Tratamento).png")
 
-#Desvio Padr„o
+#Desvio Padr√£o
 dp_comp_antes <- data.frame(
   
-  variavel = c("Volume de CrÈdito", "InadimplÍncia", "Taxa de Juros"),
+  variavel = c("Volume de Cr√©dito", "Inadimpl√™ncia", "Taxa de Juros"),
   dp_cpf = c(
     sd(basecpf$vol[basecpf$post == 0]),
     sd(basecpf$inadim[basecpf$post == 0]),
@@ -116,12 +116,12 @@ dp_comp_antes <- data.frame(
 )
 dp_tabela_antes <- gt(dp_comp_antes) %>%
   tab_header(
-    title = "ComparaÁ„o Entre Desvios Padr„o (PrÈ Tratamento)"
+    title = "Compara√ß√£o Entre Desvios Padr√£o (Pr√© Tratamento)"
   ) %>%
   cols_label(
-    variavel = "V·riavel",
-    dp_cpf = "Desvios Padr„o (CPF)",
-    dp_cnpj = "Desvios Padr„o (CNPJ)"
+    variavel = "V√°riavel",
+    dp_cpf = "Desvios Padr√£o (CPF)",
+    dp_cnpj = "Desvios Padr√£o (CNPJ)"
   ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
@@ -132,12 +132,12 @@ dp_tabela_antes <- gt(dp_comp_antes) %>%
     decimals = 2
   )
 
-gtsave(dp_tabela_antes, filename = "ComparaÁ„o Desvios Padr„o (PrÈ Tratamento).png")
+gtsave(dp_tabela_antes, filename = "Compara√ß√£o Desvios Padr√£o (Pr√© Tratamento).png")
 
 #Depois dp
 dp_comp_depois <- data.frame(
   
-variavel = c("Volume de CrÈdito", "InadimplÍncia", "Taxa de Juros"),
+variavel = c("Volume de Cr√©dito", "Inadimpl√™ncia", "Taxa de Juros"),
 dp_cpf = c(
   sd(basecpf$vol[basecpf$post == 1]),
   sd(basecpf$inadim[basecpf$post == 1]),
@@ -151,12 +151,12 @@ dp_cnpj = c(
 )
 dp_tabela_depois <- gt(dp_comp_depois) %>%
   tab_header(
-    title = "ComparaÁ„o Entre Desvios Padr„o (PÛs Tratamento)"
+    title = "Compara√ß√£o Entre Desvios Padr√£o (P√≥s Tratamento)"
   ) %>%
   cols_label(
-    variavel = "V·riavel",
-    dp_cpf = "Desvios Padr„o (CPF)",
-    dp_cnpj = "Desvios Padr„o (CNPJ)"
+    variavel = "V√°riavel",
+    dp_cpf = "Desvios Padr√£o (CPF)",
+    dp_cnpj = "Desvios Padr√£o (CNPJ)"
   ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
@@ -167,50 +167,50 @@ dp_tabela_depois <- gt(dp_comp_depois) %>%
     decimals = 2
   )
 
-gtsave(dp_tabela_depois, filename = "ComparaÁ„o Desvios Padr„o (PÛs Tratamento).png")
+gtsave(dp_tabela_depois, filename = "Compara√ß√£o Desvios Padr√£o (P√≥s Tratamento).png")
 
 
-#Gr·ficos Volume de crÈdito:
+#Gr√°ficos Volume de cr√©dito:
 graf_volume_cpf <- ggplot(basecpf, aes(x = Data, y = vol)) +
   geom_line(color = "darkred") +
   geom_vline(xintercept = as.Date("2023-07-01"), color = "lightgrey", linetype = "dashed", linewidth = 0.8) +  
   geom_vline(xintercept = as.Date("2024-05-01"), color = "grey", linetype = "dashed", linewidth = 0.8) +  
-    labs(title = "Volume de CrÈdito X PerÌdo (CPF)", x = "PerÌodo", y = "Volume de CrÈdito") +
+    labs(title = "Volume de Cr√©dito X Per√≠do (CPF)", x = "Per√≠odo", y = "Volume de Cr√©dito") +
       theme_minimal()
 
-ggsave("Volume CrÈdito CPF.png", plot = graf_volume_cpf, width = 6.5, height = 4.5, dpi = 300)      
+ggsave("Volume Cr√©dito CPF.png", plot = graf_volume_cpf, width = 6.5, height = 4.5, dpi = 300)      
 
 graf_volume_cnpj <- ggplot(basecnpj, aes(x = Data, y = vol)) +
   geom_line(color = "red") +
   geom_vline(xintercept = as.Date("2023-07-01"), color = "lightgrey", linetype = "dashed", linewidth = 0.8) +  
   geom_vline(xintercept = as.Date("2024-05-01"), color = "grey", linetype = "dashed", linewidth = 0.8) +  
-   labs(title = "Volume de CrÈdito X PerÌdo (CNPJ)", x = "PerÌodo", y = "Volume de CrÈdito") +
+   labs(title = "Volume de Cr√©dito X Per√≠do (CNPJ)", x = "Per√≠odo", y = "Volume de Cr√©dito") +
     theme_minimal()
-ggsave("Volume CrÈdito CNPJ.png", plot = graf_volume_cnpj, width = 6.5, height = 4.5, dpi = 300)
+ggsave("Volume Cr√©dito CNPJ.png", plot = graf_volume_cnpj, width = 6.5, height = 4.5, dpi = 300)
 
-#Gr·ficos inadimplÍncia:
+#Gr√°ficos inadimpl√™ncia:
 graf_inad_cpf <- ggplot(basecpf, aes(x = Data, y = inadim)) +
   geom_line(color = "darkblue") +
   geom_vline(xintercept = as.Date("2023-07-01"), color = "lightgrey", linetype = "dashed", linewidth = 0.8) +  
   geom_vline(xintercept = as.Date("2024-05-01"), color = "grey", linetype = "dashed", linewidth = 0.8) +  
-  labs(title = "InadimplÍncia X PerÌdo (CPF)", x = "PerÌodo", y = "InadimplÍncia") +
+  labs(title = "Inadimpl√™ncia X Per√≠do (CPF)", x = "Per√≠odo", y = "Inadimpl√™ncia") +
   theme_minimal()
-ggsave("InadimplÍncia CPF.png", plot = graf_inad_cpf, width = 6.5, height = 4.5, dpi = 300)
+ggsave("Inadimpl√™ncia CPF.png", plot = graf_inad_cpf, width = 6.5, height = 4.5, dpi = 300)
 
 graf_inad_cnpj <- ggplot(basecnpj, aes(x = Data, y = inadim)) +
   geom_line(color = "blue") +
   geom_vline(xintercept = as.Date("2023-07-01"), color = "lightgrey", linetype = "dashed", linewidth = 0.8) +  
   geom_vline(xintercept = as.Date("2024-05-01"), color = "grey", linetype = "dashed", linewidth = 0.8) +  
-  labs(title = "InadimplÍncia X PerÌdo (CNPJ)", x = "PerÌodo", y = "InadimplÍncia") +
+  labs(title = "Inadimpl√™ncia X Per√≠do (CNPJ)", x = "Per√≠odo", y = "Inadimpl√™ncia") +
   theme_minimal()
-ggsave("InadimplÍncia CNPJ.png", plot = graf_inad_cnpj, width = 6.5, height = 4.5, dpi = 300)
+ggsave("Inadimpl√™ncia CNPJ.png", plot = graf_inad_cnpj, width = 6.5, height = 4.5, dpi = 300)
 
-#Gr·ficos Taxa de Juros:
+#Gr√°ficos Taxa de Juros:
 graf_tdj_cpf <- ggplot(basecpf, aes(x = Data, y = tdj)) +
   geom_line(color = "darkgreen") +
   geom_vline(xintercept = as.Date("2023-07-01"), color = "lightgrey", linetype = "dashed", linewidth = 0.8) +  
   geom_vline(xintercept = as.Date("2024-05-01"), color = "grey", linetype = "dashed", linewidth = 0.8) +  
-  labs(title = "Taxa de Juros X PerÌdo (CPF)", x = "PerÌodo", y = "Taxa de Juros") +
+  labs(title = "Taxa de Juros X Per√≠do (CPF)", x = "Per√≠odo", y = "Taxa de Juros") +
   theme_minimal()
 ggsave("Taxa de Juros CPF.png", plot = graf_tdj_cpf, width = 6.5, height = 4.5, dpi = 300)
 
@@ -218,21 +218,21 @@ graf_tdj_cnpj <- ggplot(basecnpj, aes(x = Data, y = tdj)) +
   geom_line(color = "green") +
   geom_vline(xintercept = as.Date("2023-07-01"), color = "lightgrey", linetype = "dashed", linewidth = 0.8) +  
   geom_vline(xintercept = as.Date("2024-05-01"), color = "grey", linetype = "dashed", linewidth = 0.8) +  
-  labs(title = "Taxa de Juros X PerÌdo (CNPJ)", x = "PerÌodo", y = "Taxa de Juros") +
+  labs(title = "Taxa de Juros X Per√≠do (CNPJ)", x = "Per√≠odo", y = "Taxa de Juros") +
   theme_minimal()
 ggsave("Taxa de Juros CNPJ.png", plot = graf_tdj_cnpj, width = 6.5, height = 4.5, dpi = 300)
 
-#-Regress„o Diff-in-Diff--------------------------------------------------------
+#-Regress√£o Diff-in-Diff--------------------------------------------------------
 
 #Filtrar base para conter apenas a subamostra:
 basedid <- basedid %>%
   filter(Data >= as.Date("2022-03-01"))
 
-#Criar termo de interaÁ„o:
+#Criar termo de intera√ß√£o:
 basedid <- basedid %>%
   mutate(cpf_post = cpf * post)
 
-#Rodar cada regress„o (para vol, tdj e inad):
+#Rodar cada regress√£o (para vol, tdj e inad):
 
 did_inadim <- lm(inadim ~ cpf + post + cpf_post, data = basedid)
 
@@ -252,7 +252,7 @@ white_vol <- white(did_vol, interactions = TRUE)
 
 white_tdj <- white(did_tdj, interactions = TRUE)
 
-#Detectamos Heteroscedasticidade na taxa de juros. Usamos Erros Robustos Padr„o:
+#Detectamos Heteroscedasticidade na taxa de juros. Usamos Erros Robustos Padr√£o:
 
 did_tdj_robust <- coeftest(did_tdj, vcov. = vcovHC(did_tdj, type = "HC1"))
 
@@ -290,17 +290,17 @@ tabela_reg <- function(model, title) {
     fmt_number(columns = `Pr(>|t|)`, decimals = 3) %>%
     cols_label(
       Estimate = "Estimativa",
-      `Std. Error` = "Erro Padr„o",
-      `t value` = "EstatÌstica t",
+      `Std. Error` = "Erro Padr√£o",
+      `t value` = "Estat√≠stica t",
       `Pr(>|t|)` = "p-valor",
-      Significance = "Signific‚ncia"
+      Significance = "Signific√¢ncia"
     ) %>%
     tab_header(title = title)
   
   return(gt_table)
 }
 
-did_inadim_table <- tabela_reg(summary(did_inadim)$coefficients, "InadimplÍncia")
+did_inadim_table <- tabela_reg(summary(did_inadim)$coefficients, "Inadimpl√™ncia")
 did_vol_table <- tabela_reg(summary(did_vol)$coefficients, "Volume")
 did_tdj_table <- tabela_reg(did_tdj_df, "Taxa de Juros")
 
@@ -314,7 +314,7 @@ did_tdj_table
 # Save did_inadim_table
 gtsave(
   did_inadim_table,
-  filename = "Diff-in-Diff InadimplÍncia.png",
+  filename = "Diff-in-Diff Inadimpl√™ncia.png",
   zoom = 2,  
   expand = 10,  
   vwidth = 1000,  
@@ -341,7 +341,7 @@ gtsave(
   vheight = 600
 )
 
-#Checar possÌvel "spillover" na taxa de juros:
+#Checar poss√≠vel "spillover" na taxa de juros:
 
 controle <- basedid %>% filter(cpf == 0)
 
